@@ -1,14 +1,16 @@
 package com.eat.reggie.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.eat.reggie.commn.R;
 import com.eat.reggie.entity.Category;
 import com.eat.reggie.service.CategoryService;
+import com.eat.reggie.service.DishService;
+import com.eat.reggie.service.SetmealService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -28,5 +30,40 @@ public class CategoryController {
         log.info("category:{}", category);
         categoryService.save(category);
         return R.success("新增分类成功");
+    }
+
+    @GetMapping("/page")
+    private R<Page> page(int page, int pageSize){
+        log.info("page = {}, pageSize = {}, name = {}", page);
+
+        //构造分页构造器
+        Page<Category> pageInfo = new Page<>(page, pageSize);
+        //构造条件构造器
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+        //添加排序条件
+        queryWrapper.orderByAsc(Category::getSort);
+        //执行查询
+        categoryService.page(pageInfo, queryWrapper);
+        return R.success(pageInfo);
+    }
+
+    @DeleteMapping
+    public R<String> delete(Long id){
+        log.info("删除分类，id为：{}", id);
+        categoryService.remove(id);
+        return R.success("分类信息删除成功");
+    }
+
+    /**
+     * 根据id修改分类信息
+     * @param category
+     * @return
+     */
+    @PutMapping
+    public R<String> update(@RequestBody Category category){
+        log.info("修改分类信息：{}", category.toString());
+
+        categoryService.updateById(category);
+        return R.success("修改分类信息成功");
     }
 }
