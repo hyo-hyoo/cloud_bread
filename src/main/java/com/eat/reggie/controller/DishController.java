@@ -9,6 +9,7 @@ import com.eat.reggie.entity.Dish;
 import com.eat.reggie.service.CategoryService;
 import com.eat.reggie.service.DishFlavorService;
 import com.eat.reggie.service.DishService;
+import com.eat.reggie.service.SetmealDishService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.omg.CORBA.StringHolder;
@@ -29,6 +30,9 @@ public class DishController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private SetmealDishService setmealDishService;
 
 
     /**
@@ -116,5 +120,70 @@ public class DishController {
         }
 
         return R.error("没有查询到对应菜品的信息");
+    }
+
+    /**
+     * 根据条件查询对应菜品数据
+     * @param dish
+     * @return
+     */
+    @GetMapping("/list")
+    public R<List<Dish>> list(Dish dish){
+        //构造查询条件
+        LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
+        //添加条件，查询状态为1（启售状态）的菜品
+        queryWrapper.eq(Dish::getStatus, 1);
+
+        //添加排序条件
+        queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+
+        List<Dish> list = dishService.list(queryWrapper);
+
+
+        return R.success(list);
+    }
+
+    @DeleteMapping
+    public R<String> delete(@RequestParam List<Long> ids){
+        log.info("ids:{}", ids);
+
+        dishService.removeWithFlavor(ids);
+
+        return R.success("菜品删除成功");
+    }
+
+    @PostMapping("/status/{status}")
+    public R<String> changeStatus(@PathVariable int status, @RequestParam List<Long> ids){
+        log.info("ids:{}", ids);
+        if(status == 1){
+            //启售
+            LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.in(Dish::getId, ids);
+            List<Dish> list = dishService.list(queryWrapper);
+            for (Dish d: list) {
+                d.setStatus(1);
+            }
+
+            dishService.updateBatchById(list);
+            return R.success("菜品启售成功");
+
+        }
+        if(status == 0){
+            //停售
+            LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.in(Dish::getId, ids);
+            List<Dish> list = dishService.list(queryWrapper);
+            for (Dish d: list) {
+                d.setStatus(0);
+            }
+
+            dishService.updateBatchById(list);
+
+            return R.success("菜品停售成功");
+
+        }
+
+        return R.success("更改菜品状态失败");
     }
 }

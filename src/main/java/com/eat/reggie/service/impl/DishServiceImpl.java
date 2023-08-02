@@ -2,6 +2,7 @@ package com.eat.reggie.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.eat.reggie.commn.CustomException;
 import com.eat.reggie.dto.DishDto;
 import com.eat.reggie.entity.Dish;
 import com.eat.reggie.entity.DishFlavor;
@@ -74,6 +75,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
     }
 
     @Override
+    @Transactional
     public void updateWithFlavor(DishDto dishDto) {
         //更新dish表基本信息
         this.updateById(dishDto);
@@ -91,5 +93,33 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 
         //保存菜品口味数据到菜品口味表dish_flavor
         dishFlavorService.saveBatch(flavors);
+    }
+
+    /**
+     * 删除菜品，并删除对应菜品口味
+     * @param ids
+     */
+    @Override
+    public void removeWithFlavor(List<Long> ids) {
+        //查询菜品状态，确认是否可以删除
+        LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(Dish::getId, ids);
+        queryWrapper.eq(Dish::getStatus, 1);
+        int count = this.count(queryWrapper);
+
+        //如果不能删除，则抛出一个业务异常
+        if(count > 0){
+            throw new CustomException("菜品正在售卖中，不能删除");
+        }
+
+        //如果能删除，先删除菜品表中的数据--dish
+        this.removeByIds(ids);
+
+        //delete from dish_flavor where dish_id in ids
+        LambdaQueryWrapper<DishFlavor> queryWrapper1 = new LambdaQueryWrapper<>();
+        queryWrapper1.in(DishFlavor::getDishId, ids);
+
+        //删除关系表中的数据
+        dishFlavorService.remove(queryWrapper1);
     }
 }
