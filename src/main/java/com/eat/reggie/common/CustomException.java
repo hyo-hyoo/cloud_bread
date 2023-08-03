@@ -1,4 +1,4 @@
-package com.eat.reggie.commn;
+package com.eat.reggie.common;
 
 /**
  * 自定义业务异常类

@@ -1,4 +1,4 @@
-package com.eat.reggie.commn;
+package com.eat.reggie.common;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
