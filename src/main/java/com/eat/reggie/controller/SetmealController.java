@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.eat.reggie.common.CustomException;
 import com.eat.reggie.common.R;
+import com.eat.reggie.dto.DishDto;
 import com.eat.reggie.dto.SetmealDto;
+import com.eat.reggie.entity.Category;
 import com.eat.reggie.entity.Dish;
 import com.eat.reggie.entity.Setmeal;
 import com.eat.reggie.entity.SetmealDish;
@@ -12,6 +14,7 @@ import com.eat.reggie.service.DishService;
 import com.eat.reggie.service.SetmealDishService;
 import com.eat.reggie.service.SetmealService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -132,5 +135,48 @@ public class SetmealController {
             return R.success("套餐停售成功");
         }
         return null;
+    }
+
+    @GetMapping("/list")
+    public R<List<Setmeal>> list(Setmeal setmeal){
+        //条件构造器
+        LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
+        //添加条件
+        queryWrapper.eq(setmeal.getCategoryId() != null, Setmeal::getCategoryId, setmeal.getCategoryId());
+        queryWrapper.eq(setmeal.getStatus() != null,Setmeal::getStatus, 1);
+        //添加排序条件
+        queryWrapper.orderByDesc(Setmeal::getUpdateTime);
+
+        List<Setmeal> list = setmealService.list(queryWrapper);
+        return R.success(list);
+    }
+
+    @GetMapping("/dish/{id}")
+    public R<List<DishDto>> dish(@PathVariable Long id){
+        //得到套餐内菜品的id
+        LambdaQueryWrapper<SetmealDish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SetmealDish::getSetmealId, id);
+        List<SetmealDish> list = setmealDishService.list(queryWrapper);
+
+        List<DishDto> dishDtoList = list.stream().map((item) -> {
+            DishDto dishDto = new DishDto();
+            Dish dish = dishService.getById(item.getDishId());
+            if(dish != null){
+                BeanUtils.copyProperties(dish, dishDto);
+                dishDto.setCopies(item.getCopies());
+                return dishDto;
+            }
+            return null;
+        }).collect(Collectors.toList());
+/*
+        List<Long> dishIds = list.stream().map((item) -> item.getDishId()).collect(Collectors.toList());
+
+        //根据菜品id的list获取菜品信息
+        LambdaQueryWrapper<Dish> dishQueryWrapper = new LambdaQueryWrapper<>();
+        dishQueryWrapper.in(Dish::getId, dishIds);
+        List<Dish> dishList = dishService.list(dishQueryWrapper);
+*/
+
+        return R.success(dishDtoList);
     }
 }

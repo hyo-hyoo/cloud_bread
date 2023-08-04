@@ -6,6 +6,8 @@ import com.eat.reggie.common.R;
 import com.eat.reggie.dto.DishDto;
 import com.eat.reggie.entity.Category;
 import com.eat.reggie.entity.Dish;
+import com.eat.reggie.entity.DishFlavor;
+import com.eat.reggie.entity.SetmealDish;
 import com.eat.reggie.service.CategoryService;
 import com.eat.reggie.service.DishService;
 import com.eat.reggie.service.SetmealDishService;
@@ -122,9 +124,10 @@ public class DishController {
 
     /**
      * 根据条件查询对应菜品数据
-     * @param dish
+     * @param dishDto
      * @return
      */
+/*
     @GetMapping("/list")
     public R<List<Dish>> list(Dish dish){
         //构造查询条件
@@ -141,10 +144,42 @@ public class DishController {
 
         return R.success(list);
     }
+*/
+
+    @GetMapping("/list")
+    public R<List<DishDto>> list(DishDto dishDto){
+        //构造查询条件
+        LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(dishDto.getCategoryId() != null, Dish::getCategoryId, dishDto.getCategoryId());
+        //添加条件，查询状态为1（启售状态）的菜品
+        queryWrapper.eq(Dish::getStatus, 1);
+
+        //添加排序条件
+        queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+
+        List<Dish> list = dishService.list(queryWrapper);
+
+        List<DishDto> dishDtoList = list.stream().map((item) -> {
+            DishDto dishDto1 = dishService.getByIdWithFlavor(item.getId());
+            return dishDto1;
+        }).collect(Collectors.toList());
+
+
+        return R.success(dishDtoList);
+    }
+
 
     @DeleteMapping
     public R<String> delete(@RequestParam List<Long> ids){
         log.info("ids:{}", ids);
+
+        //若该菜品在套餐中，则删除对应setmeal_dish表中数据
+        LambdaQueryWrapper<SetmealDish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(SetmealDish::getDishId, ids);
+        int count = setmealDishService.count(queryWrapper);
+        if (count != 0){
+            setmealDishService.remove(queryWrapper);
+        }
 
         dishService.removeWithFlavor(ids);
 

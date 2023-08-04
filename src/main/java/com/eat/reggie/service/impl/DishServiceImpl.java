@@ -62,6 +62,10 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 
         DishDto dishDto = new DishDto();
 
+        if (dish == null){
+            return null;
+        }
+
         BeanUtils.copyProperties(dish, dishDto);
 
         //查询当前菜品对应的口味信息，从dish_flavor表查询
