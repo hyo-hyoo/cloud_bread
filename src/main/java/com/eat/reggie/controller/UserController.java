@@ -1,6 +1,7 @@
 package com.eat.reggie.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.eat.reggie.common.BaseContext;
 import com.eat.reggie.common.R;
 import com.eat.reggie.entity.User;
 import com.eat.reggie.service.UserService;
@@ -95,6 +96,18 @@ public class UserController {
 
 
         return R.error("用户登录失败");
+    }
+
+    /**
+     * 移动端用户退出
+     * @param session
+     * @return
+     */
+    @PostMapping("/loginout")
+    public R<String> loginout(HttpSession session){
+        //清理session中保存的当前登录用户的id
+        session.removeAttribute("user");
+        return R.success("退出成功");
     }
 
 }

@@ -6,8 +6,12 @@ import com.eat.reggie.common.BaseContext;
 import com.eat.reggie.common.CustomException;
 import com.eat.reggie.common.R;
 import com.eat.reggie.dto.OrdersDto;
+import com.eat.reggie.entity.OrderDetail;
 import com.eat.reggie.entity.Orders;
+import com.eat.reggie.entity.ShoppingCart;
+import com.eat.reggie.service.OrderDetailService;
 import com.eat.reggie.service.OrderService;
+import com.eat.reggie.service.ShoppingCartService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +26,12 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private OrderDetailService orderDetailService;
+
+    @Autowired
+    private ShoppingCartService shoppingCartService;
 
     /**
      * 用户下单
@@ -95,9 +105,32 @@ public class OrderController {
         return R.success("修改订单状态成功");
     }
 
-    @PostMapping("/again")
-    public void again(Long id){
 
+    @PostMapping("/again")
+    public R<String> again(@RequestBody Orders orders){
+        LambdaQueryWrapper<OrderDetail> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(OrderDetail::getOrderId, orders.getId());
+        List<OrderDetail> orderDetails = orderDetailService.list(queryWrapper);
+
+        Long userId = BaseContext.getCurrentId();
+        LambdaQueryWrapper<ShoppingCart> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(ShoppingCart::getUserId, userId);
+        shoppingCartService.remove(wrapper);
+
+        for (OrderDetail o: orderDetails) {
+            ShoppingCart shoppingCart = new ShoppingCart();
+            shoppingCart.setAmount(o.getAmount());
+            shoppingCart.setDishFlavor(o.getDishFlavor());
+            shoppingCart.setDishId(o.getDishId());
+            shoppingCart.setSetmealId(o.getSetmealId());
+            shoppingCart.setImage(o.getImage());
+            shoppingCart.setName(o.getName());
+
+            shoppingCartService.add(shoppingCart);
+
+        }
+
+        return R.success("菜品已添加至购物车");
     }
 
 
