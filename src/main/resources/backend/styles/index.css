@@ -62,7 +62,7 @@
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  box-shadow: 0 1px 4px #675656;
 }
 .navbar .hamburger-container {
   line-height: 46px;
@@ -74,7 +74,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 .navbar .hamburger-container:hover {
-  background: rgba(0, 0, 0, 0.025);
+  background: #675656;
 }
 .navbar .breadcrumb-container {
   float: left;
@@ -85,7 +85,7 @@
   margin-right: 34px;
   height: 100%;
   line-height: 64px;
-  color: #333333;
+  color: #675656;
   font-size: 14px;
 }
 
@@ -93,7 +93,7 @@
   margin-left: 20px;
   width: 28px;
   font-size: 14px;
-  color: #ffc200;
+  color: #CCC2C2;
   cursor: pointer;
 }
 
@@ -122,7 +122,7 @@
   transition: background 0.3s;
 }
 .navbar .right-menu .right-menu-item.hover-effect:hover {
-  background: rgba(0, 0, 0, 0.025);
+  background: #675656;
 }
 .navbar .right-menu .avatar-container {
   margin-right: 30px;
@@ -148,7 +148,7 @@
 .navbar .head-lable {
   /* position: absolute; */
   /* background: #fff; */
-  color: #333333;
+  color: #675656;
   height: 64px;
   font-size: 16px;
   width: 300px;
@@ -166,7 +166,7 @@
   padding-right: 14px;
   margin-right: 14px;
   font-size: 16px;
-  color: #333333;
+  color: #675656;
   cursor: pointer;
   font-weight: 400;
 }
@@ -218,7 +218,7 @@
 .el-submenu > .el-submenu__title,
 .el-submenu .el-menu-item {
   min-width: 190px !important;
-  background-color: #272a36 !important;
+  background-color: #675656 !important;
 }
 /* .el-submenu > .el-submenu__title:hover, .el-submenu .el-menu-item:hover {
   background-color: #0e132b !important;
@@ -247,20 +247,20 @@
 }
 
 .el-menu .el-menu-item:active {
-  color: #333333 !important;
+  color: #675656 !important;
   background-color: transparent !important;
 }
 .el-menu .el-menu-item:active span {
-  color: #333333 !important;
+  color: #675656 !important;
 }
 
 .el-menu .el-menu-item.is-active {
-  background-color: #ffc200 !important;
-  color: #333333 !important;
+  background-color: #CCC2C2 !important;
+  color: #675656 !important;
   border-radius: 0 21px 21px 0 !important;
 }
 .el-menu .el-menu-item.is-active span {
-  color: #333333 !important;
+  color: #675656 !important;
   font-weight: 500 !important;
 }
 

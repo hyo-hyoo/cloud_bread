@@ -11120,19 +11120,19 @@ input[type="number"] {
 }
 .el-button--primary {
   color: #333333;
-  background-color: #ffc200;
-  border-color: #ffc200;
+  background-color: #dbc6ba;
+  border-color: #dbc6ba;
 }
 .el-button--primary:focus,
 .el-button--primary:hover {
-  background: #fdd24c;
-  border-color: #fdd24c;
+  background: #dbc6ba;
+  border-color: #dbc6ba;
   color: #333333;
 }
 .el-button--primary.is-active,
 .el-button--primary:active {
-  background: #efb602;
-  border-color: #efb602;
+  background: #dbc6ba;
+  border-color: #dbc6ba;
   color: #333333;
 }
 .el-button--primary:active {
@@ -11147,19 +11147,19 @@ input[type="number"] {
   border-color: #f6f1e0;
 }
 .el-button--primary.is-plain {
-  color: #ffc200;
+  color: #dbc6ba;
   background: #fffbf0;
   border-color: #fbe396;
 }
 .el-button--primary.is-plain:focus,
 .el-button--primary.is-plain:hover {
-  background: #ffc200;
-  border-color: #ffc200;
+  background: #dbc6ba;
+  border-color: #dbc6ba;
   color: #333333;
 }
 .el-button--primary.is-plain:active {
-  background: #efb602;
-  border-color: #efb602;
+  background: #dbc6ba;
+  border-color: #dbc6ba;
   color: #333333;
   outline: 0;
 }
@@ -11167,7 +11167,7 @@ input[type="number"] {
 .el-button--primary.is-plain.is-disabled:active,
 .el-button--primary.is-plain.is-disabled:focus,
 .el-button--primary.is-plain.is-disabled:hover {
-  color: #ffc200;
+  color: #dbc6ba;
   background-color: #fffbf0;
   border-color: #fbe396;
 }
@@ -11226,19 +11226,19 @@ input[type="number"] {
 }
 .el-button--warning {
   color: #fff;
-  background-color: #ffb302;
-  border-color: #ffb302;
+  background-color: #dbc6ba;
+  border-color: #dbc6ba;
 }
 .el-button--warning:focus,
 .el-button--warning:hover {
-  background: #ffc235;
-  border-color: #ffc235;
+  background: #dbc6ba;
+  border-color: #dbc6ba;
   color: #fff;
 }
 .el-button--warning.is-active,
 .el-button--warning:active {
-  background: #e6a102;
-  border-color: #e6a102;
+  background: #dbc6ba;
+  border-color: #dbc6ba;
   color: #fff;
 }
 .el-button--warning:active {
@@ -11253,19 +11253,19 @@ input[type="number"] {
   border-color: #ffd981;
 }
 .el-button--warning.is-plain {
-  color: #ffb302;
+  color: #dbc6ba;
   background: #fff7e6;
   border-color: #ffe19a;
 }
 .el-button--warning.is-plain:focus,
 .el-button--warning.is-plain:hover {
-  background: #ffb302;
-  border-color: #ffb302;
+  background: #dbc6ba;
+  border-color: #dbc6ba;
   color: #fff;
 }
 .el-button--warning.is-plain:active {
-  background: #e6a102;
-  border-color: #e6a102;
+  background: #dbc6ba;
+  border-color: #dbc6ba;
   color: #fff;
   outline: 0;
 }
@@ -11273,7 +11273,7 @@ input[type="number"] {
 .el-button--warning.is-plain.is-disabled:active,
 .el-button--warning.is-plain.is-disabled:focus,
 .el-button--warning.is-plain.is-disabled:hover {
-  color: #ffd167;
+  color: #dbc6ba;
   background-color: #fff7e6;
   border-color: #fff0cc;
 }
