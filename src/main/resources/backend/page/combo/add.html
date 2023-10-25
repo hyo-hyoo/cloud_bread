@@ -51,7 +51,7 @@
         width: 777px;
       }
       .addDish .addBut {
-        background: #ffc200;
+        background: #dbc6ba;
         display: inline-block;
         padding: 0px 20px;
         border-radius: 3px;
@@ -88,8 +88,8 @@
         cursor: pointer;
       }
       .addDishCon .leftCont .act {
-        border-color: #FFC200 !important;
-        color: #FFC200 !important;
+        border-color: #dbc6ba !important;
+        color: #dbc6ba !important;
       }
       .addDishCon .leftCont .tabList {
         flex: 1;
@@ -174,34 +174,34 @@
           class="demo-ruleForm"
         >
           <div>
-            <el-form-item label="套餐名称:" prop="name" >
-              <el-input v-model="ruleForm.name" placeholder="请填写套餐名称" maxlength="20"/>
+            <el-form-item label="セット名:" prop="name" >
+              <el-input v-model="ruleForm.name" maxlength="20"/>
             </el-form-item>
-            <el-form-item label="套餐分类:" prop="idType">
-              <el-select v-model="ruleForm.idType" placeholder="请选择套餐分类" @change="$forceUpdate()">
+            <el-form-item label="セット分類:" prop="idType">
+              <el-select v-model="ruleForm.idType" placeholder="セット分類を選んで" @change="$forceUpdate()">
                 <el-option v-for="(item, index) in setMealList" :key="index" :label="item.name" :value="item.id" />
               </el-select>
             </el-form-item>
           </div>
           <div>
-            <el-form-item label="套餐价格:" prop="price">
-              <el-input v-model="ruleForm.price" placeholder="请设置套餐价格" />
+            <el-form-item label="値段:" prop="price">
+              <el-input v-model="ruleForm.price" />
             </el-form-item>
           </div>
           <div>
-            <el-form-item label="套餐菜品:" class="setmealFood">
+            <el-form-item label="含める食品:" class="setmealFood">
               <el-form-item>
                 <div class="addDish">
-                  <span v-if="dishTable.length == 0" class="addBut" @click="openAddDish"> + 添加菜品</span>
+                  <span v-if="dishTable.length == 0" class="addBut" @click="openAddDish"> + 食品追加</span>
                   <div v-if="dishTable.length != 0" class="content">
-                    <div class="addBut" style="margin-bottom: 20px" @click="openAddDish">+ 添加菜品</div>
+                    <div class="addBut" style="margin-bottom: 20px" @click="openAddDish">+ 食品追加</div>
                     <div class="table">
                       <el-table :data="dishTable" style="width: 100%">
-                        <el-table-column prop="name" label="名称" width="180" align="center"></el-table-column>
-                        <el-table-column prop="price" label="原价" width="180">
+                        <el-table-column prop="name" label="食品名" width="180" align="center"></el-table-column>
+                        <el-table-column prop="price" label="値段" width="180">
                           <template slot-scope="scope"> {{ Number(scope.row.price) / 100 }} </template>
                         </el-table-column>
-                        <el-table-column prop="address" label="份数" align="center">
+                        <el-table-column prop="address" label="数量" align="center">
                           <template slot-scope="scope">
                             <el-input-number
                               v-model="scope.row.copies"
@@ -214,7 +214,7 @@
                         </el-table-column>
                         <el-table-column prop="address" label="操作" width="180px;" align="center">
                           <template slot-scope="scope">
-                            <el-button type="text" size="small" @click="delDishHandle(scope.$index)"> 删除 </el-button>
+                            <el-button type="text" size="small" @click="delDishHandle(scope.$index)"> 削除 </el-button>
                           </template>
                         </el-table-column>
                       </el-table>
@@ -225,7 +225,7 @@
             </el-form-item>
           </div>
           <div>
-            <el-form-item label="套餐图片:" class="uploadImg">
+            <el-form-item label="写真:" class="uploadImg">
               <el-upload
                 class="avatar-uploader"
                 action="/common/upload"
@@ -240,13 +240,13 @@
             </el-form-item>
           </div>
           <div class="address">
-            <el-form-item label="套餐描述:">
-              <el-input v-model="ruleForm.description" type="textarea" :rows="3" placeholder="套餐描述，最长200字" maxlength="200"/>
+            <el-form-item label="紹介:">
+              <el-input v-model="ruleForm.description" type="textarea" :rows="3" placeholder="このセットについて、アピールしたいこと" maxlength="200"/>
             </el-form-item>
           </div>
           <div class="subBox address">
             <el-form-item>
-              <el-button @click="goBack()"> 取消 </el-button>
+              <el-button @click="goBack()"> キャンセル </el-button>
               <el-button type="primary" @click="submitForm('ruleForm', false)"> 保存 </el-button>
               <el-button
                 v-if="actionType == 'add'"
@@ -254,14 +254,14 @@
                 class="continue"
                 @click="submitForm('ruleForm', true)"
               >
-                保存并继续添加套餐
+                保存して追加する
               </el-button>
             </el-form-item>
           </div>
         </el-form>
       </div>
       <el-dialog
-        title="添加菜品"
+        title="食品追加"
         class="addDishList"
         :visible.sync="dialogVisible"
         width="60%"
@@ -270,7 +270,7 @@
         <el-input
           v-model="value"
           class="seachDish"
-          placeholder="请输入菜品名称进行搜索"
+          placeholder="食品名を入力して検索"
           style="width: 250px"
           size="small"
           clearable
@@ -295,7 +295,7 @@
             <div class="tabList">
               <div class="table">
                 <div v-if="dishAddList.length == 0" style="padding-left:10px">
-                  暂无菜品!
+                  なし!
                 </div>
                 <el-checkbox-group
                   v-if="dishAddList.length > 0"
@@ -313,7 +313,7 @@
                     >
                       <div class="item">
                         <span style="flex: 3;text-align: left">{{ item.dishName }}</span>
-                        <span>{{ item.status == 0 ? '停售' : '在售' }}</span>
+                        <span>{{ item.status == 0 ? '販売中止' : '販売中' }}</span>
                         <span>{{ Number(item.price)/100 }}</span>
                       </div>
                     </el-checkbox>
@@ -324,7 +324,7 @@
           </div>
           <div class="ritCont">
             <div class="tit">
-              已选菜品({{ checkedList.length }})
+              選んだ({{ checkedList.length }})
             </div>
             <div class="items">
               <div
@@ -349,8 +349,8 @@
         </div>
         
         <span slot="footer" class="dialog-footer">
-          <el-button @click="handleClose">取 消</el-button>
-          <el-button type="primary" @click="addTableList">确 定</el-button>
+          <el-button @click="handleClose">キャンセル</el-button>
+          <el-button type="primary" @click="addTableList">確　認</el-button>
         </span>
       </el-dialog>
     </div>

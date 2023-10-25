@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>瑞吉外卖管理端</title>
+    <title>Cloud Bread Management</title>
     <link rel="shortcut icon" href="favicon.ico">
     <!-- 引入样式 -->
     <link rel="stylesheet" href="plugins/element-ui/index.css" />
@@ -32,7 +32,7 @@
         <div class="sidebar-container">
           <div class="logo">
             <!-- <img src="images/logo.png" width="122.5" alt="" /> -->
-            <img src="images/login/login-logo2.png" alt="" style="width: 117px; height: 32px" />
+            <img src="images/login/login-logo.png" alt="" style="width: 117px; height: 32px" />
           </div>
 
           <el-scrollbar wrap-class="scrollbar-wrapper">
@@ -73,7 +73,7 @@
           <div class="navbar">
             <div class="head-lable">
               <span v-if="goBackFlag" class="goBack" @click="goBack()"
-                ><img src="images/icons/btn_back@2x.png" alt="" /> 返回</span
+                ><img src="images/icons/btn_back@2x.png" alt="" /> 戻る</span
               >
               <span>{{headTitle}}</span>
             </div>
@@ -123,32 +123,31 @@
               //   children: [
                   {
                     id: '2',
-                    name: '员工管理',
+                    name: 'スタッフ管理',
                     url: 'page/member/list.html',
                     icon: 'icon-member'
                   },
                   {
                     id: '3',
-                    name: '分类管理',
-
+                    name: '分類管理',
                     url: 'page/category/list.html',
                     icon: 'icon-category'
                   },
                   {
                     id: '4',
-                    name: '菜品管理',
+                    name: '食品管理',
                     url: 'page/food/list.html',
                     icon: 'icon-food'
                   },
                   {
                     id: '5',
-                    name: '套餐管理',
+                    name: 'セット管理',
                     url: 'page/combo/list.html',
                     icon: 'icon-combo'
                   },
                   {
                     id: '6',
-                    name: '订单明细',
+                    name: '注文明細',
                     url: 'page/order/list.html',
                     icon: 'icon-order'
                   }
@@ -156,7 +155,7 @@
               // },
             ],
             iframeUrl: 'page/member/list.html',
-            headTitle: '员工管理',
+            headTitle: 'スタッフ管理',
             goBackFlag: false,
             loading: true,
             timer: null

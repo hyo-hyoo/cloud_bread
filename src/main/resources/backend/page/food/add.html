@@ -60,22 +60,21 @@
       >
         <div>
           <el-form-item
-            label="菜品名称:"
+            label="食品名:"
             prop="name"
           >
             <el-input
               v-model="ruleForm.name"
-              placeholder="请填写菜品名称"
               maxlength="20"
             />
           </el-form-item>
           <el-form-item
-            label="菜品分类:"
+            label="食品分類:"
             prop="categoryId"
           >
             <el-select
               v-model="ruleForm.categoryId"
-              placeholder="请选择菜品分类"
+              placeholder="食品分類を選んでください"
             >
               <el-option v-for="(item,index) in dishList" :key="index" :label="item.name" :value="item.id" />
             </el-select>
@@ -83,29 +82,27 @@
         </div>
         <div>
           <el-form-item
-            label="菜品价格:"
+            label="値段:"
             prop="price"
           >
             <el-input
               v-model="ruleForm.price"
-              placeholder="请设置菜品价格"
             />
           </el-form-item>
         </div>
-        <el-form-item label="口味做法配置:">
+        <el-form-item label="味付けの設定:">
           <el-form-item>
             <div class="flavorBox">
               <span
                 v-if="dishFlavors.length == 0"
                 class="addBut"
                 @click="addFlavore"
-              > + 添加口味</span>
+              > + 味付け追加</span>
               <div
                 v-if="dishFlavors.length != 0"
                 class="flavor"
               >
                 <div class="title">
-                  <span>口味名（3个字内）</span><span>口味标签（输入标签回车添加）</span>
                 </div>
                 <div class="cont">
                   <div
@@ -126,7 +123,7 @@
                               v-model="item.name"
                               type="text"
                               style="width: 100%"
-                              placeholder="请输入口味"
+                              placeholder="味付けを選んで"
                               @focus="selectFlavor(true,index)"
                               @blur="outSelect(false,index)"
                               @input="inputHandle(index)"
@@ -165,14 +162,14 @@
                     <span
                       class="delFlavor delBut non"
                       @click="delFlavor(index)"
-                    >删除</span>
+                    >削除</span>
                   </div>
                 </div>
                 <div
                   class="addBut"
                   @click="addFlavore"
                 >
-                  添加口味
+                  味付け追加
                 </div>
               </div>
             </div>
@@ -182,7 +179,7 @@
         </div>
         <div>
           <el-form-item
-            label="菜品图片:"
+            label="写真:"
             prop="region"
             class="uploadImg"
           >
@@ -208,14 +205,14 @@
         </div>
         <div class="address">
           <el-form-item
-            label="菜品描述:"
+            label="紹介:"
             prop="region"
           >
             <el-input
               v-model="ruleForm.description"
               type="textarea"
               :rows="3"
-              placeholder="菜品描述，最长200字"
+              placeholder="この食品について、アピールしたいこと"
               maxlength="200"
             />
           </el-form-item>
@@ -223,7 +220,7 @@
         <div class="subBox address">
           <el-form-item>
             <el-button @click="goBack()">
-              取消
+              キャンセル
             </el-button>
             <el-button
               type="primary"
@@ -237,7 +234,7 @@
               class="continue"
               @click="submitForm('ruleForm','goAnd')"
             >
-              保存并继续添加菜品
+              保存して追加する
             </el-button>
           </el-form-item>
         </div>
@@ -402,10 +399,8 @@
           getFlavorListHand () {
             // flavor flavorData
             this.dishFlavorsData = [
-              {'name':'甜味','value':['无糖','少糖','半糖','多糖','全糖']},
-              {'name':'温度','value':['热饮','常温','去冰','少冰','多冰']},
-              {'name':'忌口','value':['不要葱','不要蒜','不要香菜','不要辣']},
-              {'name':'辣度','value':['不辣','微辣','中辣','重辣']}
+              {'name':'甘さ','value':['なし','少ない','半分','多い']},
+              {'name':'温度','value':['熱い','普通','氷付け']}
             ]
           },
 
