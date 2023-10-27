@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui">
-        <title>菩提阁</title>
+        <title>Cloud Bread</title>
         <link rel="icon" href="./../images/favico.ico">
         <!--不同屏幕尺寸根字体设置-->
         <script src="./../js/base.js"></script>
@@ -21,7 +21,7 @@
         <div id="order" class="app">
             <div class="divHead">
                 <div class="divTitle">
-                    <i class="el-icon-arrow-left" @click="goBack"></i>菩提阁
+                    <i class="el-icon-arrow-left" @click="goBack"></i>Cloud Bread
                 </div>
             </div>
             <div class="divBody" v-if="orderList.length > 0">
@@ -44,10 +44,10 @@
                             </div>
                         </div>
                         <div class="result">
-                            <span>共{{order.sumNum}} 件商品,实付</span><span class="price">￥{{order.amount}}</span>
+                            <span>商品は合計{{order.sumNum}} 点,金額</span><span class="price">￥{{order.amount}}</span>
                         </div>
                         <div class="btn" v-if="order.status === 4">
-                            <div class="btnAgain" @click="addOrderAgain(order)">再来一单</div>
+                            <div class="btnAgain" @click="addOrderAgain(order)">リピート注文</div>
                         </div>
                     </van-cell>
                 </van-list>
@@ -55,7 +55,7 @@
             <div class="divNoData" v-else>
                 <div class="divContainer">
                     <img src="./../images/no_order.png"/>
-                    <div>暂无订单</div>
+                    <div>注文なし</div>
                 </div>
             </div>
         </div>
@@ -144,19 +144,19 @@
                     let str = ''
                     switch(status){
                         case 1:
-                            str =  '待付款'
+                            str =  '支払い待ち'
                         break;
                         case 2:
-                            str =  '正在派送'
+                            str =  '配送中'
                         break;
                         case 3:
-                            str =  '已派送'
+                            str =  '配送済み'
                         break;
                         case 4:
-                            str =  '已完成'
+                            str =  '完成'
                         break;
                         case 5:
-                            str =  '已取消'
+                            str =  'キャンセル'
                         break;
 
                     }
